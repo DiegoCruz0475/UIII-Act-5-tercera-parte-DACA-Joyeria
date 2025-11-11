@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Ver Productos{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="card shadow-sm p-4" style="background-color: #fce4ec;"> <!-- Fondo rosa claro -->
+        <h2 class="card-title text-center mb-4" style="color: #c2185b;">Listado de Productos</h2>
+        <a href="{% url 'agregar_producto' %}" class="btn btn-success mb-3" style="background-color: #e91e63; border-color: #e91e63;"><i class="fas fa-plus-circle me-1"></i> Agregar Nuevo Producto</a>
+
+        {% if productos %}
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead class="table-dark" style="background-color: #880e4f;">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Material</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Proveedor</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        <th scope="row">{{ producto.id_producto }}</th>
+                        <td>{{ producto.nombre }}</td>
+                        <td>{{ producto.material }}</td>
+                        <td>${{ producto.precio }}</td>
+                        <td>{{ producto.tipo }}</td>
+                        <td>{{ producto.stock }}</td>
+                        <td>{{ producto.id_proveedor.nombre }} {{ producto.id_proveedor.apellido }}</td>
+                        <td>
+                            <a href="{% url 'actualizar_producto' producto.id_producto %}" class="btn btn-sm btn-info me-1" style="background-color: #ff8a65; border-color: #ff8a65;"><i class="fas fa-edit"></i> Editar</a>
+                            <a href="{% url 'borrar_producto' producto.id_producto %}" class="btn btn-sm btn-danger" style="background-color: #e57373; border-color: #e57373;"><i class="fas fa-trash-alt"></i> Borrar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info text-center" role="alert" style="background-color: #f8bbd0; color: #ad1457; border-color: #f48fb1;">
+            No hay productos registrados aún.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

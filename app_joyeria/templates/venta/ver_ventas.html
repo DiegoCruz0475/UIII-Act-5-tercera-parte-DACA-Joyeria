@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Ver Ventas{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="card shadow-sm p-4" style="background-color: #fff3e0;"> <!-- Fondo naranja muy claro -->
+        <h2 class="card-title text-center mb-4" style="color: #f57c00;">Listado de Ventas</h2>
+        <a href="{% url 'agregar_venta' %}" class="btn btn-success mb-3" style="background-color: #ffa726; border-color: #ffa726;"><i class="fas fa-plus-circle me-1"></i> Registrar Nueva Venta</a>
+
+        {% if ventas %}
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead class="table-dark" style="background-color: #e65100;">
+                    <tr>
+                        <th scope="col">ID Venta</th>
+                        <th scope="col">ID Cliente</th>
+                        <th scope="col">ID Empleado</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Método Pago</th>
+                        <th scope="col">Productos</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for venta in ventas %}
+                    <tr>
+                        <th scope="row">{{ venta.id_venta }}</th>
+                        <td>{{ venta.id_cliente }}</td>
+                        <td>{{ venta.id_empleado }}</td>
+                        <td>{{ venta.fecha_venta|date:"d/m/Y" }}</td>
+                        <td>${{ venta.total }}</td>
+                        <td>{{ venta.metodo_pago }}</td>
+                        <td>
+                            {% for producto in venta.productos.all %}
+                                <span class="badge bg-secondary">{{ producto.nombre }}</span>{% if not forloop.last %}, {% endif %}
+                            {% empty %}
+                                <span class="text-muted">Sin productos</span>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <a href="{% url 'actualizar_venta' venta.id_venta %}" class="btn btn-sm btn-info me-1" style="background-color: #ffb74d; border-color: #ffb74d;"><i class="fas fa-edit"></i> Editar</a>
+                            <a href="{% url 'borrar_venta' venta.id_venta %}" class="btn btn-sm btn-danger" style="background-color: #ef5350; border-color: #ef5350;"><i class="fas fa-trash-alt"></i> Borrar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info text-center" role="alert" style="background-color: #ffcc80; color: #e65100; border-color: #ffab40;">
+            No hay ventas registradas aún.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Borrar Venta{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="card shadow-sm p-4 bg-light">
+        <h2 class="card-title text-center mb-4" style="color: #c62828;">Confirmar Eliminación de Venta</h2>
+        <div class="alert alert-warning text-center" role="alert" style="background-color: #ffcdd2; color: #c62828; border-color: #ef9a9a;">
+            <i class="fas fa-exclamation-triangle me-2"></i> ¿Estás seguro de que quieres eliminar la venta #<strong>{{ venta.id_venta }}</strong>?
+            Esta acción no se puede deshacer.
+        </div>
+        <dl class="row mb-4">
+            <dt class="col-sm-3">ID Venta:</dt>
+            <dd class="col-sm-9">{{ venta.id_venta }}</dd>
+
+            <dt class="col-sm-3">ID Cliente:</dt>
+            <dd class="col-sm-9">{{ venta.id_cliente }}</dd>
+
+            <dt class="col-sm-3">ID Empleado:</dt>
+            <dd class="col-sm-9">{{ venta.id_empleado }}</dd>
+
+            <dt class="col-sm-3">Fecha de Venta:</dt>
+            <dd class="col-sm-9">{{ venta.fecha_venta|date:"d/m/Y" }}</dd>
+
+            <dt class="col-sm-3">Total:</dt>
+            <dd class="col-sm-9">${{ venta.total }}</dd>
+
+            <dt class="col-sm-3">Método de Pago:</dt>
+            <dd class="col-sm-9">{{ venta.metodo_pago }}</dd>
+
+            <dt class="col-sm-3">Productos:</dt>
+            <dd class="col-sm-9">
+                {% for producto in venta.productos.all %}
+                    <span class="badge bg-secondary">{{ producto.nombre }}</span>{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    <span class="text-muted">Sin productos</span>
+                {% endfor %}
+            </dd>
+        </dl>
+
+        <form method="post" class="text-center">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger me-2" style="background-color: #ef5350; border-color: #ef5350;"><i class="fas fa-trash-alt me-1"></i> Sí, Eliminar</button>
+            <a href="{% url 'ver_ventas' %}" class="btn btn-secondary"><i class="fas fa-times-circle me-1"></i> Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

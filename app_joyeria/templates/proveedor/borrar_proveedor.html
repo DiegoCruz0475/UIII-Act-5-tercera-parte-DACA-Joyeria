@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Borrar Proveedor{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="card shadow-sm p-4 bg-light">
+        <h2 class="card-title text-center mb-4" style="color: #c62828;">Confirmar Eliminación</h2>
+        <div class="alert alert-warning text-center" role="alert" style="background-color: #ffcdd2; color: #c62828; border-color: #ef9a9a;">
+            <i class="fas fa-exclamation-triangle me-2"></i> ¿Estás seguro de que quieres eliminar al proveedor "<strong>{{ proveedor.nombre }} {{ proveedor.apellido }}</strong>"?
+            Esta acción no se puede deshacer.
+        </div>
+        <dl class="row mb-4">
+            <dt class="col-sm-3">ID:</dt>
+            <dd class="col-sm-9">{{ proveedor.id_proveedor }}</dd>
+
+            <dt class="col-sm-3">Nombre:</dt>
+            <dd class="col-sm-9">{{ proveedor.nombre }}</dd>
+
+            <dt class="col-sm-3">Apellido:</dt>
+            <dd class="col-sm-9">{{ proveedor.apellido }}</dd>
+
+            <dt class="col-sm-3">Dirección:</dt>
+            <dd class="col-sm-9">{{ proveedor.direccion }}</dd>
+
+            <dt class="col-sm-3">Teléfono:</dt>
+            <dd class="col-sm-9">{{ proveedor.telefono }}</dd>
+
+            <dt class="col-sm-3">Correo:</dt>
+            <dd class="col-sm-9">{{ proveedor.correo }}</dd>
+
+            <dt class="col-sm-3">Tipo de Suministro:</dt>
+            <dd class="col-sm-9">{{ proveedor.tipo_suministro }}</dd>
+        </dl>
+
+        <form method="post" class="text-center">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger me-2" style="background-color: #ef5350; border-color: #ef5350;"><i class="fas fa-trash-alt me-1"></i> Sí, Eliminar</button>
+            <a href="{% url 'ver_proveedores' %}" class="btn btn-secondary"><i class="fas fa-times-circle me-1"></i> Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

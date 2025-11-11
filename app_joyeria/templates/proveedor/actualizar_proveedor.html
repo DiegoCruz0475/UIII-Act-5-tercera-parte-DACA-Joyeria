@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Actualizar Proveedor{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="card shadow-sm p-4" style="background-color: #e8f5e9;"> <!-- Fondo verde claro suave -->
+        <h2 class="card-title text-center mb-4" style="color: #2e7d32;">Actualizar Proveedor: {{ proveedor.nombre }} {{ proveedor.apellido }}</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" value="{{ proveedor.nombre }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="apellido" class="form-label">Apellido:</label>
+                <input type="text" class="form-control" id="apellido" name="apellido" value="{{ proveedor.apellido }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="direccion" class="form-label">Dirección:</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" value="{{ proveedor.direccion }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="telefono" class="form-label">Teléfono:</label>
+                <input type="text" class="form-control" id="telefono" name="telefono" value="{{ proveedor.telefono }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="correo" class="form-label">Correo Electrónico:</label>
+                <input type="email" class="form-control" id="correo" name="correo" value="{{ proveedor.correo }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="tipo_suministro" class="form-label">Tipo de Suministro:</label>
+                <input type="text" class="form-control" id="tipo_suministro" name="tipo_suministro" value="{{ proveedor.tipo_suministro }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="background-color: #66bb6a; border-color: #66bb6a;">Actualizar Proveedor</button>
+            <a href="{% url 'ver_proveedores' %}" class="btn btn-secondary ms-2">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

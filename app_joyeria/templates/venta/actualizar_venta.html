@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Actualizar Venta{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="card shadow-sm p-4" style="background-color: #fffde7;"> <!-- Fondo amarillo muy claro suave -->
+        <h2 class="card-title text-center mb-4" style="color: #fbc02d;">Actualizar Venta #{{ venta.id_venta }}</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_cliente" class="form-label">ID Cliente:</label>
+                <input type="number" class="form-control" id="id_cliente" name="id_cliente" value="{{ venta.id_cliente }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_empleado" class="form-label">ID Empleado:</label>
+                <input type="number" class="form-control" id="id_empleado" name="id_empleado" value="{{ venta.id_empleado }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="fecha_venta" class="form-label">Fecha de Venta:</label>
+                <input type="date" class="form-control" id="fecha_venta" name="fecha_venta" value="{{ venta.fecha_venta|date:'Y-m-d' }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="total" class="form-label">Total de Venta:</label>
+                <input type="number" step="0.01" class="form-control" id="total" name="total" value="{{ venta.total }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="metodo_pago" class="form-label">Método de Pago:</label>
+                <input type="text" class="form-control" id="metodo_pago" name="metodo_pago" value="{{ venta.metodo_pago }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="productos" class="form-label">Productos Incluidos:</label>
+                <select class="form-control" id="productos" name="productos" multiple required size="5">
+                    {% for producto in productos_disponibles %}
+                        <option value="{{ producto.id_producto }}"
+                            {% if producto.id_producto in productos_seleccionados_ids %}selected{% endif %}>
+                            {{ producto.nombre }} (${{ producto.precio }})
+                        </option>
+                    {% endfor %}
+                </select>
+                <small class="form-text text-muted">Mantén presionado `Ctrl` (o `Cmd` en Mac) para seleccionar múltiples productos.</small>
+            </div>
+            <button type="submit" class="btn btn-primary" style="background-color: #ffc107; border-color: #ffc107;">Actualizar Venta</button>
+            <a href="{% url 'ver_ventas' %}" class="btn btn-secondary ms-2">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

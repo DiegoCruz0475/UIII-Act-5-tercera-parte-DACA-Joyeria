@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Ver Proveedores{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="card shadow-sm p-4" style="background-color: #e3f2fd;"> <!-- Fondo azul muy claro -->
+        <h2 class="card-title text-center mb-4" style="color: #0d47a1;">Listado de Proveedores</h2>
+        <a href="{% url 'agregar_proveedor' %}" class="btn btn-success mb-3" style="background-color: #1e88e5; border-color: #1e88e5;"><i class="fas fa-plus-circle me-1"></i> Agregar Nuevo Proveedor</a>
+
+        {% if proveedores %}
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead class="table-dark" style="background-color: #01579b;">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Suministro</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for proveedor in proveedores %}
+                    <tr>
+                        <th scope="row">{{ proveedor.id_proveedor }}</th>
+                        <td>{{ proveedor.nombre }}</td>
+                        <td>{{ proveedor.apellido }}</td>
+                        <td>{{ proveedor.direccion }}</td>
+                        <td>{{ proveedor.telefono }}</td>
+                        <td>{{ proveedor.correo }}</td>
+                        <td>{{ proveedor.tipo_suministro }}</td>
+                        <td>
+                            <a href="{% url 'actualizar_proveedor' proveedor.id_proveedor %}" class="btn btn-sm btn-info me-1" style="background-color: #4fc3f7; border-color: #4fc3f7;"><i class="fas fa-edit"></i> Editar</a>
+                            <a href="{% url 'borrar_proveedor' proveedor.id_proveedor %}" class="btn btn-sm btn-danger" style="background-color: #ef5350; border-color: #ef5350;"><i class="fas fa-trash-alt"></i> Borrar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info text-center" role="alert" style="background-color: #bbdefb; color: #1a237e; border-color: #90caf9;">
+            No hay proveedores registrados aún.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
